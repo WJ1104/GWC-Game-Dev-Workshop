@@ -20,12 +20,41 @@ Collect flowers. Dodge the bee. Beat the clock.
 ## ✿ Get started
 
 ```
-1. Put index.html, style.css, and script.js in one folder
-2. Open index.html in your browser
-3. Click Start Game
+git clone https://github.com/WJ1104/GWC-Game-Dev-Workshop.git
 ```
 
-Edit a file, save it, refresh the page. That's the whole loop.
+No git? Click the green **Code** button on GitHub, choose **Download ZIP**, and unzip it.
+
+Then open `index.html` in your browser and click **Start Game**. Edit a file, save it, refresh the page. That's the whole loop.
+
+---
+
+## ✿ Your missions
+
+The game is almost done, but a few pieces are missing. Open `brokenscript.js` and look for the `TODO` comments. Each one tells you what's broken and gives you hints.
+
+| # | Mission | File |
+|:-:|---------|------|
+| 1 | Add Bunny with HTML | `index.html` |
+| 2 | Style Bunny with CSS | `style.css` |
+| 3 | Keep Bunny inside the garden | `brokenscript.js` |
+| 4 | Make flowers give points | `brokenscript.js` |
+| 5 | Make the bee hurt Bunny | `brokenscript.js` |
+| 6 | Build the butterfly speed boost | `brokenscript.js` |
+
+To play with your own code, open `index.html` and change this line:
+
+```html
+<script src="script.js"></script>
+```
+
+to this:
+
+```html
+<script src="brokenscript.js"></script>
+```
+
+Stuck? Ask a mentor, or peek at `script.js`. That's the finished game.
 
 ---
 
@@ -73,15 +102,19 @@ A butterfly flutters in after 5 seconds, then again every 10 seconds. Touch it a
 ## ✿ What's inside
 
 ```
-code-and-bloom/
-├── index.html    what's on the page
-├── style.css     how it looks
-└── script.js     what it does
+GWC-Game-Dev-Workshop/
+├── index.html         what's on the page
+├── style.css          how it looks
+├── brokenscript.js    the starter code with your missions
+├── script.js          the finished game
+└── README.md          you are here
 ```
 
 ---
 
-## ✿ Make it yours
+## ✿ Bonus ideas
+
+Finished all six missions? Make the game yours.
 
 - [ ] Change the title and the background color
 - [ ] Swap Bunny for a different emoji
