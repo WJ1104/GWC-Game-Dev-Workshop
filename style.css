@@ -1,0 +1,270 @@
+/* -------------------------
+   PAGE
+------------------------- */
+
+body {
+    margin: 0;
+
+    font-family: Arial, sans-serif;
+
+    background-color: #fff5f8;
+
+    text-align: center;
+}
+
+
+/* -------------------------
+   MAIN CONTAINER
+------------------------- */
+
+.game-container {
+    width: 700px;
+
+    margin: 30px auto;
+}
+
+
+h1 {
+    color: #d94f8a;
+
+    margin-bottom: 5px;
+}
+
+
+.instructions {
+    color: #666;
+
+    margin-bottom: 15px;
+}
+
+
+/* -------------------------
+   SCORE / LIVES / TIMER
+------------------------- */
+
+.game-info {
+    display: flex;
+
+    justify-content: space-between;
+
+    font-size: 20px;
+
+    font-weight: bold;
+}
+
+
+/* -------------------------
+   GAME AREA
+------------------------- */
+
+#game {
+    width: 700px;
+    height: 450px;
+
+    position: relative;
+
+    overflow: hidden;
+
+    background-color: #b8e994;
+
+    border: 5px solid #7cb342;
+
+    border-radius: 20px;
+
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+
+/* -------------------------
+   BUNNY
+------------------------- */
+
+#bunny {
+    position: absolute;
+
+    left: 325px;
+    top: 200px;
+
+    font-size: 50px;
+
+    width: 55px;
+    height: 55px;
+
+    z-index: 3;
+}
+
+
+/* -------------------------
+   COLLECTIBLE FLOWER
+------------------------- */
+
+#flower {
+    position: absolute;
+
+    left: 100px;
+    top: 100px;
+
+    font-size: 38px;
+
+    width: 45px;
+    height: 45px;
+
+    z-index: 2;
+}
+
+
+/* -------------------------
+   BEE
+------------------------- */
+
+#bee {
+    position: absolute;
+
+    left: 500px;
+    top: 200px;
+
+    font-size: 42px;
+
+    width: 45px;
+    height: 45px;
+
+    z-index: 2;
+}
+
+
+/* -------------------------
+   GARDEN DECORATIONS
+------------------------- */
+
+.decoration {
+    position: absolute;
+
+    font-size: 25px;
+
+    opacity: 0.7;
+}
+
+
+.flower1 {
+    left: 20px;
+    top: 20px;
+}
+
+
+.flower2 {
+    right: 20px;
+    top: 30px;
+}
+
+
+.flower3 {
+    left: 25px;
+    bottom: 20px;
+}
+
+
+.flower4 {
+    right: 25px;
+    bottom: 20px;
+}
+
+
+/* -------------------------
+   HIT MESSAGE
+------------------------- */
+
+#hitMessage {
+    position: absolute;
+
+    left: 50%;
+    top: 40%;
+
+    transform: translate(-50%, -50%);
+
+    font-size: 30px;
+
+    font-weight: bold;
+
+    color: #d63384;
+
+    background-color: white;
+
+    padding: 10px 20px;
+
+    border-radius: 10px;
+
+    z-index: 5;
+}
+
+
+/* Bunny flashes after getting hit */
+
+.hit {
+    animation: flash 0.2s 5;
+}
+
+
+@keyframes flash {
+
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.2;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+
+/* -------------------------
+   BUTTONS
+------------------------- */
+
+button {
+    margin-top: 20px;
+
+    padding: 12px 25px;
+
+    font-size: 18px;
+
+    background-color: #ff85b3;
+
+    color: white;
+
+    border: none;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+}
+
+
+button:hover {
+    background-color: #e6679a;
+}
+
+
+/* -------------------------
+   GAME OVER
+------------------------- */
+
+#gameOver {
+    margin-top: 20px;
+
+    padding: 20px;
+
+    background-color: white;
+
+    border-radius: 15px;
+
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+
+.hidden {
+    display: none;
+}

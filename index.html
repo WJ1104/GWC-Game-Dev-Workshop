@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Code & Bloom 🌸</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="game-container">
+
+    <h1>🌸 Code & Bloom 🌸</h1>
+
+    <p class="instructions">
+        Help Bunny collect flowers and avoid the bee!
+        Use WASD or the arrow keys to move.
+    </p>
+
+    <!-- GAME INFORMATION -->
+    <div class="game-info">
+
+        <p>🌷 Score: <span id="score">0</span></p>
+
+        <p>❤️ Lives: <span id="lives">3</span></p>
+
+        <p>⏰ Time: <span id="timer">45</span></p>
+
+    </div>
+
+
+    <!-- GAME AREA -->
+    <div id="game">
+
+        <!-- Garden decorations -->
+        <div class="decoration flower1">🌼</div>
+        <div class="decoration flower2">🌺</div>
+        <div class="decoration flower3">🌼</div>
+        <div class="decoration flower4">🌺</div>
+
+        <!-- Bunny -->
+        <div id="bunny">🐰</div>
+
+        <!-- Collectible flower -->
+        <div id="flower">🌸</div>
+
+        <!-- Enemy -->
+        <div id="bee">🐝</div>
+
+        <!-- Message when Bunny gets hit -->
+        <div id="hitMessage" class="hidden">
+            OUCH! 💥
+        </div>
+
+    </div>
+
+
+    <!-- START BUTTON -->
+    <button id="startButton">
+        Start Game
+    </button>
+
+
+    <!-- GAME OVER SCREEN -->
+    <div id="gameOver" class="hidden">
+
+        <h2>Garden Complete! 🌷</h2>
+
+        <p>
+            Your final score:
+            <span id="finalScore">0</span>
+        </p>
+
+        <p id="finalMessage"></p>
+
+        <button id="playAgainButton">
+            Play Again
+        </button>
+
+    </div>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
