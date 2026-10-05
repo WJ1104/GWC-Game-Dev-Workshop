@@ -2,26 +2,49 @@
 // GET ELEMENTS FROM THE PAGE
 // ----------------------------
 
-const bunny = document.getElementById("bunny");
-const flower = document.getElementById("flower");
-const bee = document.getElementById("bee");
+const bunny =
+    document.getElementById("bunny");
 
-const scoreText = document.getElementById("score");
-const livesText = document.getElementById("lives");
-const timerText = document.getElementById("timer");
+const flower =
+    document.getElementById("flower");
 
-const startButton = document.getElementById("startButton");
+const bee =
+    document.getElementById("bee");
 
-const gameOverScreen = document.getElementById("gameOver");
+const butterfly =
+    document.getElementById("butterfly");
 
-const finalScoreText = document.getElementById("finalScore");
-const finalMessage = document.getElementById("finalMessage");
+
+const scoreText =
+    document.getElementById("score");
+
+const livesText =
+    document.getElementById("lives");
+
+const timerText =
+    document.getElementById("timer");
+
+
+const startButton =
+    document.getElementById("startButton");
+
+const gameOverScreen =
+    document.getElementById("gameOver");
+
+const finalScoreText =
+    document.getElementById("finalScore");
+
+const finalMessage =
+    document.getElementById("finalMessage");
 
 const playAgainButton =
-    document.getElementById("playAgainButton");
+    document.getElementById("playAgainButton");
 
 const hitMessage =
-    document.getElementById("hitMessage");
+    document.getElementById("hitMessage");
+
+const boostMessage =
+    document.getElementById("boostMessage");
 
 
 // ----------------------------
@@ -44,37 +67,36 @@ let gameRunning = false;
 
 let canGetHit = true;
 
-const bunnySpeed = 20;
+
+// Bunny speed MUST use "let"
+// because the butterfly changes it.
+
+let bunnySpeed = 20;
 
 
 // ----------------------------
 // FLOWERS
 // ----------------------------
 
-// Each flower has an emoji and point value
-
 const flowers = [
 
-    {
-        emoji: "🌸",
-        points: 1
-    },
+    {
+        emoji: "🌸",
+        points: 1
+    },
 
-    {
-        emoji: "🌷",
-        points: 2
-    },
+    {
+        emoji: "🌷",
+        points: 2
+    },
 
-    {
-        emoji: "🌻",
-        points: 3
-    }
+    {
+        emoji: "🌻",
+        points: 3
+    }
 
 ];
 
-
-// Stores the point value of the
-// flower currently on the screen
 
 let currentFlowerPoints = 1;
 
@@ -87,6 +109,10 @@ let gameTimer;
 
 let beeTimer;
 
+let butterflyTimer;
+
+let boostTimer;
+
 
 // ----------------------------
 // START GAME
@@ -94,67 +120,100 @@ let beeTimer;
 
 function startGame() {
 
-    // Reset game values
+    // Stop old timers just in case
 
-    score = 0;
+    clearInterval(gameTimer);
 
-    lives = 3;
+    clearInterval(beeTimer);
 
-    timeLeft = 45;
+    clearInterval(butterflyTimer);
 
-    bunnyX = 325;
-    bunnyY = 200;
-
-    beeX = 500;
-    beeY = 200;
-
-    gameRunning = true;
-
-    canGetHit = true;
+    clearTimeout(boostTimer);
 
 
-    // Update text
+    // Reset values
 
-    scoreText.textContent = score;
+    score = 0;
 
-    livesText.textContent = lives;
+    lives = 3;
 
-    timerText.textContent = timeLeft;
+    timeLeft = 45;
 
+    bunnySpeed = 20;
 
-    // Reset Bunny position
+    bunnyX = 325;
+    bunnyY = 200;
 
-    bunny.style.left = bunnyX + "px";
+    beeX = 500;
+    beeY = 200;
 
-    bunny.style.top = bunnyY + "px";
+    gameRunning = true;
 
-
-    // Reset Bee position
-
-    bee.style.left = beeX + "px";
-
-    bee.style.top = beeY + "px";
+    canGetHit = true;
 
 
-    // Hide screens/messages
+    // Update screen
 
-    startButton.classList.add("hidden");
+    scoreText.textContent = score;
 
-    gameOverScreen.classList.add("hidden");
+    livesText.textContent = lives;
 
-    hitMessage.classList.add("hidden");
-
-
-    // Place first flower
-
-    moveFlower();
+    timerText.textContent = timeLeft;
 
 
-    // Start timers
+    // Reset Bunny
 
-    startTimer();
+    bunny.style.left =
+        bunnyX + "px";
 
-    startBee();
+    bunny.style.top =
+        bunnyY + "px";
+
+
+    // Reset Bee
+
+    bee.style.left =
+        beeX + "px";
+
+    bee.style.top =
+        beeY + "px";
+
+
+    // Hide messages
+
+    startButton.classList.add(
+        "hidden"
+    );
+
+    gameOverScreen.classList.add(
+        "hidden"
+    );
+
+    hitMessage.classList.add(
+        "hidden"
+    );
+
+    boostMessage.classList.add(
+        "hidden"
+    );
+
+    butterfly.classList.add(
+        "hidden"
+    );
+
+
+    // Place first flower
+
+    moveFlower();
+
+
+    // Start game systems
+
+    startTimer();
+
+    startBee();
+
+    startButterflies();
 
 }
 
@@ -163,107 +222,116 @@ function startGame() {
 // MOVE BUNNY
 // ----------------------------
 
-document.addEventListener("keydown", function(event) {
+document.addEventListener(
+    "keydown",
+    function(event) {
 
-    if (!gameRunning) {
-        return;
-    }
+        if (!gameRunning) {
 
+            return;
 
-    // LEFT
-
-    if (
-        event.key === "ArrowLeft" ||
-        event.key.toLowerCase() === "a"
-    ) {
-
-        bunnyX -= bunnySpeed;
-
-    }
+        }
 
 
-    // RIGHT
+        // LEFT
 
-    if (
-        event.key === "ArrowRight" ||
-        event.key.toLowerCase() === "d"
-    ) {
+        if (
+            event.key === "ArrowLeft" ||
+            event.key.toLowerCase() === "a"
+        ) {
 
-        bunnyX += bunnySpeed;
+            bunnyX -= bunnySpeed;
 
-    }
-
-
-    // UP
-
-    if (
-        event.key === "ArrowUp" ||
-        event.key.toLowerCase() === "w"
-    ) {
-
-        bunnyY -= bunnySpeed;
-
-    }
+        }
 
 
-    // DOWN
+        // RIGHT
 
-    if (
-        event.key === "ArrowDown" ||
-        event.key.toLowerCase() === "s"
-    ) {
+        if (
+            event.key === "ArrowRight" ||
+            event.key.toLowerCase() === "d"
+        ) {
 
-        bunnyY += bunnySpeed;
+            bunnyX += bunnySpeed;
 
-    }
-
-
-    // ----------------------------
-    // KEEP BUNNY INSIDE GARDEN
-    // ----------------------------
-
-    if (bunnyX < 0) {
-
-        bunnyX = 0;
-
-    }
+        }
 
 
-    if (bunnyX > 645) {
+        // UP
 
-        bunnyX = 645;
+        if (
+            event.key === "ArrowUp" ||
+            event.key.toLowerCase() === "w"
+        ) {
 
-    }
+            bunnyY -= bunnySpeed;
 
-
-    if (bunnyY < 0) {
-
-        bunnyY = 0;
-
-    }
+        }
 
 
-    if (bunnyY > 395) {
+        // DOWN
 
-        bunnyY = 395;
+        if (
+            event.key === "ArrowDown" ||
+            event.key.toLowerCase() === "s"
+        ) {
 
-    }
+            bunnyY += bunnySpeed;
 
-
-    // Update Bunny position
-
-    bunny.style.left = bunnyX + "px";
-
-    bunny.style.top = bunnyY + "px";
+        }
 
 
-    // Check collisions
+        // ----------------------------
+        // KEEP BUNNY INSIDE GARDEN
+        // ----------------------------
 
-    checkFlowerCollision();
+        if (bunnyX < 0) {
 
-    checkBeeCollision();
+            bunnyX = 0;
 
-});
+        }
+
+
+        if (bunnyX > 645) {
+
+            bunnyX = 645;
+
+        }
+
+
+        if (bunnyY < 0) {
+
+            bunnyY = 0;
+
+        }
+
+
+        if (bunnyY > 395) {
+
+            bunnyY = 395;
+
+        }
+
+
+        // Update Bunny position
+
+        bunny.style.left =
+            bunnyX + "px";
+
+        bunny.style.top =
+            bunnyY + "px";
+
+
+        // Check collisions
+
+        checkFlowerCollision();
+
+        checkBeeCollision();
+
+        checkButterflyCollision();
+
+    }
+);
 
 
 // ----------------------------
@@ -272,41 +340,47 @@ document.addEventListener("keydown", function(event) {
 
 function checkFlowerCollision() {
 
-    const bunnyBox =
-        bunny.getBoundingClientRect();
+    const bunnyBox =
+        bunny.getBoundingClientRect();
 
-    const flowerBox =
-        flower.getBoundingClientRect();
-
-
-    const touching =
-
-        bunnyBox.left < flowerBox.right &&
-
-        bunnyBox.right > flowerBox.left &&
-
-        bunnyBox.top < flowerBox.bottom &&
-
-        bunnyBox.bottom > flowerBox.top;
+    const flowerBox =
+        flower.getBoundingClientRect();
 
 
-    if (touching) {
+    const touching =
 
-        // Add the flower's points
+        bunnyBox.left <
+        flowerBox.right &&
 
-        score += currentFlowerPoints;
+        bunnyBox.right >
+        flowerBox.left &&
+
+        bunnyBox.top <
+        flowerBox.bottom &&
+
+        bunnyBox.bottom >
+        flowerBox.top;
 
 
-        // Update score
+    if (touching) {
 
-        scoreText.textContent = score;
+        // Add flower points
+
+        score +=
+            currentFlowerPoints;
 
 
-        // Move to another flower
+        // Update score
 
-        moveFlower();
+        scoreText.textContent =
+            score;
 
-    }
+
+        // Move flower
+
+        moveFlower();
+
+    }
 
 }
 
@@ -317,45 +391,49 @@ function checkFlowerCollision() {
 
 function moveFlower() {
 
-    // Random location
+    // Random location
 
-    const randomX =
-        Math.floor(Math.random() * 640);
+    const randomX =
+        Math.floor(
+            Math.random() * 640
+        );
 
-    const randomY =
-        Math.floor(Math.random() * 390);
-
-
-    flower.style.left =
-        randomX + "px";
-
-    flower.style.top =
-        randomY + "px";
+    const randomY =
+        Math.floor(
+            Math.random() * 390
+        );
 
 
-    // Random flower
+    flower.style.left =
+        randomX + "px";
 
-    const randomIndex =
-        Math.floor(
-            Math.random() * flowers.length
-        );
-
-
-    const chosenFlower =
-        flowers[randomIndex];
+    flower.style.top =
+        randomY + "px";
 
 
-    // Change emoji
+    // Choose random flower
 
-    flower.textContent =
-        chosenFlower.emoji;
+    const randomIndex =
+        Math.floor(
+            Math.random() *
+            flowers.length
+        );
 
 
-    // Remember how many points
-    // this flower is worth
+    const chosenFlower =
+        flowers[randomIndex];
 
-    currentFlowerPoints =
-        chosenFlower.points;
+
+    // Change emoji
+
+    flower.textContent =
+        chosenFlower.emoji;
+
+
+    // Remember points
+
+    currentFlowerPoints =
+        chosenFlower.points;
 
 }
 
@@ -366,68 +444,77 @@ function moveFlower() {
 
 function startBee() {
 
-    clearInterval(beeTimer);
+    clearInterval(beeTimer);
 
 
-    beeTimer = setInterval(function() {
+    beeTimer =
+        setInterval(function() {
 
-        if (!gameRunning) {
-            return;
-        }
+            if (!gameRunning) {
 
+                return;
 
-        // Find direction from bee to bunny
-
-        const differenceX =
-            bunnyX - beeX;
-
-        const differenceY =
-            bunnyY - beeY;
+            }
 
 
-        // Move bee toward Bunny
+            // Find Bunny's direction
 
-        if (differenceX > 0) {
+            const differenceX =
+                bunnyX - beeX;
 
-            beeX += 8;
-
-        }
-
-        else if (differenceX < 0) {
-
-            beeX -= 8;
-
-        }
+            const differenceY =
+                bunnyY - beeY;
 
 
-        if (differenceY > 0) {
+            // Move Bee horizontally
 
-            beeY += 8;
+            if (differenceX > 0) {
 
-        }
+                beeX += 8;
 
-        else if (differenceY < 0) {
+            }
 
-            beeY -= 8;
+            else if (
+                differenceX < 0
+            ) {
 
-        }
+                beeX -= 8;
 
-
-        // Update Bee position
-
-        bee.style.left =
-            beeX + "px";
-
-        bee.style.top =
-            beeY + "px";
+            }
 
 
-        // Check collision
+            // Move Bee vertically
 
-        checkBeeCollision();
+            if (differenceY > 0) {
+
+                beeY += 8;
+
+            }
+
+            else if (
+                differenceY < 0
+            ) {
+
+                beeY -= 8;
+
+            }
 
 
-    }, 100);
+            // Update Bee position
+
+            bee.style.left =
+                beeX + "px";
+
+            bee.style.top =
+                beeY + "px";
+
+
+            // Check collision
+
+            checkBeeCollision();
+
+
+        }, 100);
 
 }
 
@@ -438,34 +525,40 @@ function startBee() {
 
 function checkBeeCollision() {
 
-    if (!canGetHit) {
-        return;
-    }
+    if (!canGetHit) {
+
+        return;
+
+    }
 
 
-    const bunnyBox =
-        bunny.getBoundingClientRect();
+    const bunnyBox =
+        bunny.getBoundingClientRect();
 
-    const beeBox =
-        bee.getBoundingClientRect();
-
-
-    const touching =
-
-        bunnyBox.left < beeBox.right &&
-
-        bunnyBox.right > beeBox.left &&
-
-        bunnyBox.top < beeBox.bottom &&
-
-        bunnyBox.bottom > beeBox.top;
+    const beeBox =
+        bee.getBoundingClientRect();
 
 
-    if (touching) {
+    const touching =
 
-        loseLife();
+        bunnyBox.left <
+        beeBox.right &&
 
-    }
+        bunnyBox.right >
+        beeBox.left &&
+
+        bunnyBox.top <
+        beeBox.bottom &&
+
+        bunnyBox.bottom >
+        beeBox.top;
+
+
+    if (touching) {
+
+        loseLife();
+
+    }
 
 }
 
@@ -476,65 +569,76 @@ function checkBeeCollision() {
 
 function loseLife() {
 
-    lives--;
-
-    livesText.textContent = lives;
+    lives--;
 
 
-    // Prevent losing all lives instantly
-    // while Bunny is touching the bee
-
-    canGetHit = false;
+    livesText.textContent =
+        lives;
 
 
-    // Show OUCH message
+    // Temporarily protect Bunny
 
-    hitMessage.classList.remove("hidden");
-
-
-    // Make Bunny flash
-
-    bunny.classList.add("hit");
+    canGetHit = false;
 
 
-    // Move Bee away from Bunny
+    // Show message
 
-    beeX = Math.floor(
-        Math.random() * 600
-    );
-
-    beeY = Math.floor(
-        Math.random() * 350
-    );
+    hitMessage.classList.remove(
+        "hidden"
+    );
 
 
-    bee.style.left =
-        beeX + "px";
+    // Flash Bunny
 
-    bee.style.top =
-        beeY + "px";
-
-
-    // Hide hit effect after 1 second
-
-    setTimeout(function() {
-
-        hitMessage.classList.add("hidden");
-
-        bunny.classList.remove("hit");
-
-        canGetHit = true;
-
-    }, 1000);
+    bunny.classList.add(
+        "hit"
+    );
 
 
-    // No lives left
+    // Move Bee away
 
-    if (lives <= 0) {
+    beeX =
+        Math.floor(
+            Math.random() * 600
+        );
 
-        endGame();
+    beeY =
+        Math.floor(
+            Math.random() * 350
+        );
 
-    }
+
+    bee.style.left =
+        beeX + "px";
+
+    bee.style.top =
+        beeY + "px";
+
+
+    // Remove hit effect
+
+    setTimeout(function() {
+
+        hitMessage.classList.add(
+            "hidden"
+        );
+
+        bunny.classList.remove(
+            "hit"
+        );
+
+        canGetHit = true;
+
+    }, 1000);
+
+
+    // End game if no lives remain
+
+    if (lives <= 0) {
+
+        endGame();
+
+    }
 
 }
 
@@ -545,24 +649,207 @@ function loseLife() {
 
 function startTimer() {
 
-    clearInterval(gameTimer);
+    clearInterval(gameTimer);
 
 
-    gameTimer = setInterval(function() {
+    gameTimer =
+        setInterval(function() {
 
-        timeLeft--;
-
-        timerText.textContent =
-            timeLeft;
+            timeLeft--;
 
 
-        if (timeLeft <= 0) {
+            timerText.textContent =
+                timeLeft;
 
-            endGame();
 
-        }
+            if (timeLeft <= 0) {
 
-    }, 1000);
+                endGame();
+
+            }
+
+        }, 1000);
+
+}
+
+
+// ----------------------------
+// BUTTERFLY POWER-UP
+// ----------------------------
+
+function startButterflies() {
+
+    clearInterval(
+        butterflyTimer
+    );
+
+
+    // First Butterfly appears
+    // after 5 seconds
+
+    setTimeout(function() {
+
+        if (gameRunning) {
+
+            showButterfly();
+
+        }
+
+    }, 5000);
+
+
+    // Then another Butterfly
+    // appears every 10 seconds
+
+    butterflyTimer =
+        setInterval(function() {
+
+            if (gameRunning) {
+
+                showButterfly();
+
+            }
+
+        }, 10000);
+
+}
+
+
+// ----------------------------
+// SHOW BUTTERFLY
+// ----------------------------
+
+function showButterfly() {
+
+    // Pick random location
+
+    const randomX =
+        Math.floor(
+            Math.random() * 640
+        );
+
+    const randomY =
+        Math.floor(
+            Math.random() * 390
+        );
+
+
+    // Move Butterfly
+
+    butterfly.style.left =
+        randomX + "px";
+
+    butterfly.style.top =
+        randomY + "px";
+
+
+    // Show Butterfly
+
+    butterfly.classList.remove(
+        "hidden"
+    );
+
+}
+
+
+// ----------------------------
+// BUTTERFLY COLLISION
+// ----------------------------
+
+function checkButterflyCollision() {
+
+    // Do nothing if Butterfly
+    // is currently hidden
+
+    if (
+        butterfly.classList.contains(
+            "hidden"
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    const bunnyBox =
+        bunny.getBoundingClientRect();
+
+    const butterflyBox =
+        butterfly.getBoundingClientRect();
+
+
+    const touching =
+
+        bunnyBox.left <
+        butterflyBox.right &&
+
+        bunnyBox.right >
+        butterflyBox.left &&
+
+        bunnyBox.top <
+        butterflyBox.bottom &&
+
+        bunnyBox.bottom >
+        butterflyBox.top;
+
+
+    if (touching) {
+
+        activateSpeedBoost();
+
+    }
+
+}
+
+
+// ----------------------------
+// ACTIVATE SPEED BOOST
+// ----------------------------
+
+function activateSpeedBoost() {
+
+    // Hide Butterfly
+
+    butterfly.classList.add(
+        "hidden"
+    );
+
+
+    // Make Bunny faster
+
+    bunnySpeed = 40;
+
+
+    // Show message
+
+    boostMessage.classList.remove(
+        "hidden"
+    );
+
+
+    // Restart boost timer if
+    // another boost was active
+
+    clearTimeout(
+        boostTimer
+    );
+
+
+    // Return to normal after
+    // 5 seconds
+
+    boostTimer =
+        setTimeout(function() {
+
+            bunnySpeed = 20;
+
+
+            boostMessage.classList.add(
+                "hidden"
+            );
+
+        }, 5000);
 
 }
 
@@ -573,52 +860,77 @@ function startTimer() {
 
 function endGame() {
 
-    gameRunning = false;
+    gameRunning = false;
 
 
-    // Stop timers
+    // Stop timers
 
-    clearInterval(gameTimer);
+    clearInterval(
+        gameTimer
+    );
 
-    clearInterval(beeTimer);
+    clearInterval(
+        beeTimer
+    );
 
+    clearInterval(
+        butterflyTimer
+    );
 
-    // Final score
-
-    finalScoreText.textContent =
-        score;
-
-
-    // Different message depending
-    // on the player's score
-
-    if (score >= 30) {
-
-        finalMessage.textContent =
-            "Amazing! You're a garden expert! 🌻";
-
-    }
-
-    else if (score >= 15) {
-
-        finalMessage.textContent =
-            "Great job! Your garden is blooming! 🌷";
-
-    }
-
-    else {
-
-        finalMessage.textContent =
-            "Nice try! Keep growing your garden! 🌱";
-
-    }
+    clearTimeout(
+        boostTimer
+    );
 
 
-    // Show Game Over screen
+    // Hide Butterfly
 
-    gameOverScreen.classList.remove(
-        "hidden"
-    );
+    butterfly.classList.add(
+        "hidden"
+    );
+
+
+    // Hide boost message
+
+    boostMessage.classList.add(
+        "hidden"
+    );
+
+
+    // Final score
+
+    finalScoreText.textContent =
+        score;
+
+
+    // Final message
+
+    if (score >= 30) {
+
+        finalMessage.textContent =
+            "Amazing! You're a garden expert! 🌻";
+
+    }
+
+    else if (score >= 15) {
+
+        finalMessage.textContent =
+            "Great job! Your garden is blooming! 🌷";
+
+    }
+
+    else {
+
+        finalMessage.textContent =
+            "Nice try! Keep growing your garden! 🌱";
+
+    }
+
+
+    // Show Game Over screen
+
+    gameOverScreen.classList.remove(
+        "hidden"
+    );
 
 }
 
@@ -628,8 +940,14 @@ function endGame() {
 // ----------------------------
 
 startButton.addEventListener(
-    "click",
-    startGame
+    "click",
+    startGame
+);
+
+
+playAgainButton.addEventListener(
+    "click",
+    startGame
 );
 
 
