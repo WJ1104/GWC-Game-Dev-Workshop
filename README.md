@@ -9,13 +9,9 @@
 ![JavaScript](https://img.shields.io/badge/JavaScript-7cb342?style=flat-square)
 ![Beginner friendly](https://img.shields.io/badge/beginner-friendly-b8e994?style=flat-square)
 
-```
-      (\ /)
-      ( . .)   hi! i'm Bunny.
-      c(")(")  help me find some flowers?
-```
+🐰 *hi! i'm Bunny. will you help me find some flowers?*
 
-*Collect flowers. Dodge the bee. Beat the clock.*
+Collect flowers. Dodge the bee. Beat the clock.
 
 </div>
 
@@ -98,6 +94,12 @@ code-and-bloom/
 ---
 
 <div align="center">
+
+Stuck? Ask a mentor. Everybody gets stuck sometimes, even Bunny.
+
+*now go grow a garden* 🌱
+
+</div>
 
 Stuck? Ask a mentor. Everybody gets stuck sometimes, even Bunny.
 
